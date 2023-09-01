@@ -3,27 +3,27 @@
 #include <dirent.h>
 
 struct ext_to_folder_map {
-    char* ext;
-    char* folder;
+    char *ext;
+    char *folder;
 };
 
 struct ext_to_folder_map map[] = {
-        {"zip", "Compressed"},
-        {"rar", "Compressed"},
-        {"7z", "Compressed"},
-        {"exe", "Programs"},
-        {"msi", "Programs"},
-        {"jpg", "Images"},
-        {"png", "Images"},
-        {"gif", "Images"},
-        {"jpeg", "Images"},
-        {"webp", "Images"},
-        {"mp4", "Videos"},
-        {"mkv", "Videos"},
-        {"mp3", "Music"},
-        {"pdf","Books"},
+        {"zip",   "Compressed"},
+        {"rar",   "Compressed"},
+        {"7z",    "Compressed"},
+        {"exe",   "Programs"},
+        {"msi",   "Programs"},
+        {"jpg",   "Images"},
+        {"png",   "Images"},
+        {"gif",   "Images"},
+        {"jpeg",  "Images"},
+        {"webp",  "Images"},
+        {"mp4",   "Videos"},
+        {"mkv",   "Videos"},
+        {"mp3",   "Music"},
+        {"pdf",   "Books"},
         {"ebook", "Books"},
-        {"txt", "Texts"}
+        {"txt",   "Texts"}
 };
 
 char *get_file_extension(char *filename) {
@@ -43,9 +43,9 @@ void make_directory(const char *name) {
     }
 }
 
-char* ext_to_folder(const char* ext){
-    for(int i = 0; i < 16; i++){
-        if(strcmp(map[i].ext, ext) == 0){
+char *ext_to_folder(const char *ext) {
+    for (int i = 0; i < 16; i++) {
+        if (strcmp(map[i].ext, ext) == 0) {
             return map[i].folder;
         }
     }
@@ -58,8 +58,9 @@ void arrange_files() {
     d = opendir("./");
     if (d) {
         while ((dir = readdir(d)) != NULL) {
-            if(strcmp(get_file_extension(dir->d_name), "lnk") != 0 && strcmp(get_file_extension(dir->d_name), "") != 0){
-                char* folder = ext_to_folder(get_file_extension(dir->d_name));
+            if (strcmp(get_file_extension(dir->d_name), "lnk") != 0 &&
+                strcmp(get_file_extension(dir->d_name), "") != 0) {
+                char *folder = ext_to_folder(get_file_extension(dir->d_name));
                 make_directory(folder);
                 char new_path[512];
                 sprintf(new_path, "%s/%s", folder, dir->d_name);
